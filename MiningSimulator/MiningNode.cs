@@ -192,40 +192,40 @@ namespace MiningSimulator {
                     Stats.totalSolidRockMined++;
                     break;
                 case MiningNodeName.Diamond_T1:
-                    Stats.totalDiamondsT1Mined++;
+                    Stats.addDiamondsMinedByTier(1);
                     Stats.totalDiamondValueMined += type.rewardValue;
                     break;
                 case MiningNodeName.Diamond_T2:
-                    Stats.totalDiamondsT2Mined++;
+                    Stats.addDiamondsMinedByTier(2);
                     Stats.totalDiamondValueMined += type.rewardValue;
                     break;
                 case MiningNodeName.Diamond_T3:
-                    Stats.totalDiamondsT3Mined++;
+                    Stats.addDiamondsMinedByTier(3);
                     Stats.totalDiamondValueMined += type.rewardValue;
                     break;
                 case MiningNodeName.Red_Diamond_T1:
-                    Stats.totalRedDiamondsT1Mined++;
+                    Stats.addRedDiamondsMinedByTier(1);
                     Stats.totalRedDiamondValueMined += type.rewardValue;
                     break;
                 case MiningNodeName.Red_Diamond_T2:
-                    Stats.totalRedDiamondsT2Mined++;
+                    Stats.addRedDiamondsMinedByTier(2);
                     Stats.totalRedDiamondValueMined += type.rewardValue;
                     break;
                 case MiningNodeName.Red_Diamond_T3:
-                    Stats.totalRedDiamondsT3Mined++;
+                    Stats.addRedDiamondsMinedByTier(3);
                     Stats.totalRedDiamondValueMined += type.rewardValue;
                     break;
                 case MiningNodeName.Rune_T1:
-                    Stats.totalRunesT1Mined++;
-                    Stats.addRuneMinedByTier(type.rune.name, type.rune.tier);
+                    Stats.addRunesMinedByTier(1);
+                    Stats.addRuneMinedByTypeAndTier(type.rune.name, type.rune.tier);
                     break;
                 case MiningNodeName.Rune_T2:
-                    Stats.totalRunesT2Mined++;
-                    Stats.addRuneMinedByTier(type.rune.name, type.rune.tier);
+                    Stats.addRunesMinedByTier(2);
+                    Stats.addRuneMinedByTypeAndTier(type.rune.name, type.rune.tier);
                     break;
                 case MiningNodeName.Rune_T3:
-                    Stats.totalRunesT3Mined++;
-                    Stats.addRuneMinedByTier(type.rune.name, type.rune.tier);
+                    Stats.addRunesMinedByTier(3);
+                    Stats.addRuneMinedByTypeAndTier(type.rune.name, type.rune.tier);
                     break;
                 case MiningNodeName.Bow_T1:
 
@@ -245,8 +245,8 @@ namespace MiningSimulator {
         }
         public int CompareTo(MiningNode other) {
             // Calculate a composite score based on importance, row, and activity
-            int thisCompositeScore = (this.type.importance * 100) + ((this.type.active ? 1000 : 0) * (4 - this.row));// - (this.row * 10);
-            int otherCompositeScore = (other.type.importance * 100) + ((other.type.active ? 1000 : 0) * (4 - other.row));// - (other.row * 10);
+            int thisCompositeScore = (this.type.importance * 100) + ((this.type.active ? 1000 : 0) * (4 - this.row));
+            int otherCompositeScore = (other.type.importance * 100) + ((other.type.active ? 1000 : 0) * (4 - other.row));
 
             // Compare the composite scores
             return thisCompositeScore.CompareTo(otherCompositeScore);

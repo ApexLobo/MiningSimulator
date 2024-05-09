@@ -48,19 +48,19 @@ namespace MiningSimulator {
             lblTotalDarkRockMined.Text = $"Dark_Rock Mined: {Stats.totalDarkRockMined}";
             lblTotalSolidRockMined.Text = $"Solid_Rock Mined: {Stats.totalSolidRockMined}";
 
-            lblTotalDiamondT1Mined.Text = $"Diamond_T1 Mined: {Stats.totalDiamondsT1Mined}";
-            lblTotalDiamondT2Mined.Text = $"Diamond_T2 Mined: {Stats.totalDiamondsT2Mined}";
-            lblTotalDiamondT3Mined.Text = $"Diamond_T3 Mined: {Stats.totalDiamondsT3Mined}";
+            lblTotalDiamondT1Mined.Text = $"Diamond_T1 Mined: {Stats.getDiamondsMinedByTier(1)}";
+            lblTotalDiamondT2Mined.Text = $"Diamond_T2 Mined: {Stats.getDiamondsMinedByTier(2)}";
+            lblTotalDiamondT3Mined.Text = $"Diamond_T3 Mined: {Stats.getDiamondsMinedByTier(3)}";
             lblTotalDiamondsMined.Text = $"Diamonds Mined: {Stats.totalDiamondValueMined}";
 
-            lblTotalRedDiamondT1Mined.Text = $"Red_Diamond_T1 Mined: {Stats.totalRedDiamondsT1Mined}";
-            lblTotalRedDiamondT2Mined.Text = $"Red_Diamond_T2 Mined: {Stats.totalRedDiamondsT2Mined}";
-            lblTotalRedDiamondT3Mined.Text = $"Red_Diamond_T3 Mined: {Stats.totalRedDiamondsT3Mined}";
+            lblTotalRedDiamondT1Mined.Text = $"Red_Diamond_T1 Mined: {Stats.getRedDiamondsMinedByTier(1)}";
+            lblTotalRedDiamondT2Mined.Text = $"Red_Diamond_T2 Mined: {Stats.getRedDiamondsMinedByTier(2)}";
+            lblTotalRedDiamondT3Mined.Text = $"Red_Diamond_T3 Mined: {Stats.getRedDiamondsMinedByTier(3)}";
             lblTotalRedDiamondsMined.Text = $"Red Diamonds Mined: {Stats.totalRedDiamondValueMined}";
 
-            lblTotalRuneT1Mined.Text = $"Rune_T1 Mined: {Stats.totalRunesT1Mined}";
-            lblTotalRuneT2Mined.Text = $"Rune_T2 Mined: {Stats.totalRunesT2Mined}";
-            lblTotalRuneT3Mined.Text = $"Rune_T3 Mined: {Stats.totalRunesT3Mined}";
+            lblTotalRuneT1Mined.Text = $"Rune_T1 Mined: {Stats.getRunesMinedByTier(1)}";
+            lblTotalRuneT2Mined.Text = $"Rune_T2 Mined: {Stats.getRunesMinedByTier(2)}";
+            lblTotalRuneT3Mined.Text = $"Rune_T3 Mined: {Stats.getRunesMinedByTier(3)}";
 
             lblTotalPicksUsed.Text = $"Picks Used: {Stats.totalPicksUsed}";
             lblDepthMined.Text = $"Depth: {Stats.totalDepthMined}";

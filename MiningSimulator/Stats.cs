@@ -9,7 +9,7 @@
             set {
                 if (_totalDirtMined != value) {
                     _totalDirtMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
@@ -20,7 +20,7 @@
             set {
                 if (_totalLightRockMined != value) {
                     _totalLightRockMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
@@ -31,7 +31,7 @@
             set {
                 if (_totalDarkRockMined != value) {
                     _totalDarkRockMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
@@ -42,109 +42,92 @@
             set {
                 if (_totalSolidRockMined != value) {
                     _totalSolidRockMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
 
-        private static int _totalDiamondsT1Mined = 0;
-        public static int totalDiamondsT1Mined {
-            get => _totalDiamondsT1Mined;
-            set {
-                if (_totalDiamondsT1Mined != value) {
-                    _totalDiamondsT1Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        // Variables for tracking mined and seen items of each of the reward types and tier
+        private static int[] _totalDiamondsMinedByTier = new int[3];
+        private static int[] _totalDiamondsSeenByTier = new int[3];
+        private static int[] _totalRedDiamondsMinedByTier = new int[3];
+        private static int[] _totalRedDiamondsSeenByTier = new int[3];
+        private static int[] _totalRunesMinedByTier = new int[3];
+        private static int[] _totalRunesSeenByTier = new int[3];
+
+        // Variable for tracking mined runes of each type and tier
+        private static int[,] _minedRunesByTypeAndTier = new int[10, 3];
+
+        // Getter and setter for _totalDiamondsMinedByTier
+        public static int getDiamondsMinedByTier(int tier) {
+            return _totalDiamondsMinedByTier[tier - 1];
         }
 
-        private static int _totalDiamondsT2Mined = 0;
-        public static int totalDiamondsT2Mined {
-            get => _totalDiamondsT2Mined;
-            set {
-                if (_totalDiamondsT2Mined != value) {
-                    _totalDiamondsT2Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        public static void addDiamondsMinedByTier(int tier) {
+            _totalDiamondsMinedByTier[tier - 1]++;
+            onStatisticsChanged();
         }
 
-        private static int _totalDiamondsT3Mined = 0;
-        public static int totalDiamondsT3Mined {
-            get => _totalDiamondsT3Mined;
-            set {
-                if (_totalDiamondsT3Mined != value) {
-                    _totalDiamondsT3Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        // Getter and adder for _totalDiamondsSeenByTier
+        public static int getDiamondsSeenByTier(int tier) {
+            return _totalDiamondsSeenByTier[tier - 1];
         }
 
-        private static int _totalRedDiamondsT1Mined = 0;
-        public static int totalRedDiamondsT1Mined {
-            get => _totalRedDiamondsT1Mined;
-            set {
-                if (_totalRedDiamondsT1Mined != value) {
-                    _totalRedDiamondsT1Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        public static void addDiamondsSeenByTier(int tier) {
+            _totalDiamondsSeenByTier[tier - 1]++;
+            onStatisticsChanged();
         }
 
-        private static int _totalRedDiamondsT2Mined = 0;
-        public static int totalRedDiamondsT2Mined {
-            get => _totalRedDiamondsT2Mined;
-            set {
-                if (_totalRedDiamondsT2Mined != value) {
-                    _totalRedDiamondsT2Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        // Getter and setter for _totalRedDiamondsMinedByTier
+        public static int getRedDiamondsMinedByTier(int tier) {
+            return _totalRedDiamondsMinedByTier[tier - 1];
         }
 
-        private static int _totalRedDiamondsT3Mined = 0;
-        public static int totalRedDiamondsT3Mined {
-            get => _totalRedDiamondsT3Mined;
-            set {
-                if (_totalRedDiamondsT3Mined != value) {
-                    _totalRedDiamondsT3Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        public static void addRedDiamondsMinedByTier(int tier) {
+            _totalRedDiamondsMinedByTier[tier - 1]++;
+            onStatisticsChanged();
         }
 
-        private static int _totalRunesT1Mined = 0;
-        public static int totalRunesT1Mined {
-            get => _totalRunesT1Mined;
-            set {
-                if (_totalRunesT1Mined != value) {
-                    _totalRunesT1Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        // Getter and adder for _totalRedDiamondsSeenByTier
+        public static int getRedDiamondsSeenByTier(int tier) {
+            return _totalRedDiamondsSeenByTier[tier - 1];
         }
 
-        private static int _totalRunesT2Mined = 0;
-        public static int totalRunesT2Mined {
-            get => _totalRunesT2Mined;
-            set {
-                if (_totalRunesT2Mined != value) {
-                    _totalRunesT2Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        public static void addRedDiamondsSeenByTier(int tier) {
+            _totalRedDiamondsSeenByTier[tier - 1]++;
+            onStatisticsChanged();
         }
 
-        private static int _totalRunesT3Mined = 0;
-        public static int totalRunesT3Mined {
-            get => _totalRunesT3Mined;
-            set {
-                if (_totalRunesT3Mined != value) {
-                    _totalRunesT3Mined = value;
-                    OnStatisticsChanged();
-                }
-            }
+        // Getter and adder for _totalRunesMinedByTier
+        public static int getRunesMinedByTier(int tier) {
+            return _totalRunesMinedByTier[tier - 1];
         }
+
+        public static void addRunesMinedByTier(int tier) {
+            _totalRunesMinedByTier[tier - 1]++;
+            onStatisticsChanged();
+        }
+
+        // Getter and adder for _totalRunesSeenByTier
+        public static int getRunesSeenByTier(int tier) {
+            return _totalRunesSeenByTier[tier - 1];
+        }
+
+        public static void addRunesSeenByTier(int tier) {
+            _totalRunesSeenByTier[tier - 1]++;
+            onStatisticsChanged();
+        }
+
+        // Getter and adder for _minedRunesByTypeAndTier
+        public static int getRunesMinedByTypeAndTier(Rune.RuneName runeName, int tier) {
+            return _minedRunesByTypeAndTier[(int)runeName, tier - 1];
+        }
+
+        public static void addRuneMinedByTypeAndTier(Rune.RuneName runeName, int tier) {
+            _minedRunesByTypeAndTier[(int)runeName, tier - 1]++;
+            onStatisticsChanged();
+        }
+
 
         private static int _totalDiamondValueMined = 0;
         public static int totalDiamondValueMined {
@@ -152,7 +135,7 @@
             set {
                 if (_totalDiamondValueMined != value) {
                     _totalDiamondValueMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
@@ -163,7 +146,7 @@
             set {
                 if (_totalRedDiamondValueMined != value) {
                     _totalRedDiamondValueMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
@@ -174,7 +157,7 @@
             set {
                 if (_totalPicksUsed != value) {
                     _totalPicksUsed = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
@@ -185,114 +168,10 @@
             set {
                 if (_totalDepthMined != value) {
                     _totalDepthMined = value;
-                    OnStatisticsChanged();
+                    onStatisticsChanged();
                 }
             }
         }
-        private static int _totalDiamondsT1Seen = 0;
-        public static int totalDiamondsT1Seen {
-            get => _totalDiamondsT1Seen;
-            set {
-                if (_totalDiamondsT1Seen != value) {
-                    _totalDiamondsT1Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalDiamondsT2Seen = 0;
-        public static int totalDiamondsT2Seen {
-            get => _totalDiamondsT2Seen;
-            set {
-                if (_totalDiamondsT2Seen != value) {
-                    _totalDiamondsT2Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalDiamondsT3Seen = 0;
-        public static int totalDiamondsT3Seen {
-            get => _totalDiamondsT3Seen;
-            set {
-                if (_totalDiamondsT3Seen != value) {
-                    _totalDiamondsT3Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalRedDiamondsT1Seen = 0;
-        public static int totalRedDiamondsT1Seen {
-            get => _totalRedDiamondsT1Seen;
-            set {
-                if (_totalRedDiamondsT1Seen != value) {
-                    _totalRedDiamondsT1Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalRedDiamondsT2Seen = 0;
-        public static int totalRedDiamondsT2Seen {
-            get => _totalRedDiamondsT2Seen;
-            set {
-                if (_totalRedDiamondsT2Seen != value) {
-                    _totalRedDiamondsT2Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalRedDiamondsT3Seen = 0;
-        public static int totalRedDiamondsT3Seen {
-            get => _totalRedDiamondsT3Seen;
-            set {
-                if (_totalRedDiamondsT3Seen != value) {
-                    _totalRedDiamondsT3Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalRunesT1Seen = 0;
-        public static int totalRunesT1Seen {
-            get => _totalRunesT1Seen;
-            set {
-                if (_totalRunesT1Seen != value) {
-                    _totalRunesT1Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalRunesT2Seen = 0;
-        public static int totalRunesT2Seen {
-            get => _totalRunesT2Seen;
-            set {
-                if (_totalRunesT2Seen != value) {
-                    _totalRunesT2Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-        private static int _totalRunesT3Seen = 0;
-        public static int totalRunesT3Seen {
-            get => _totalRunesT3Seen;
-            set {
-                if (_totalRunesT3Seen != value) {
-                    _totalRunesT3Seen = value;
-                    OnStatisticsChanged();
-                }
-            }
-        }
-
-        // Variable for tracking mined runes of each type and tier
-        private static int[,] _minedRunesByTier = new int[10,3];
-
-        // Properties for accessing and setting mined runes of each type and tier
-        public static int getRunesMinedByTier(Rune.RuneName runeName, int tier) {
-            return _minedRunesByTier[(int)runeName, tier - 1];
-        }
-
-        public static void addRuneMinedByTier(Rune.RuneName runeName, int tier) {
-            _minedRunesByTier[(int)runeName, tier - 1]++;
-            OnStatisticsChanged();
-        }
-
 
         // Method to print statistics to the console
         public static void printStatistics() {
@@ -304,29 +183,38 @@
             Console.WriteLine($"Total Light Rock Mined: {totalLightRockMined}");
             Console.WriteLine($"Total Dark Rock Mined: {totalDarkRockMined}");
             Console.WriteLine($"Total Solid Rock Mined: {totalSolidRockMined}");
-            Console.WriteLine($"Total Diamonds T1 Mined: {totalDiamondsT1Mined} out of {totalDiamondsT1Seen}");
-            Console.WriteLine($"Total Diamonds T2 Mined: {totalDiamondsT2Mined} out of {totalDiamondsT2Seen}");
-            Console.WriteLine($"Total Diamonds T3 Mined: {totalDiamondsT3Mined} out of {totalDiamondsT3Seen}");
-            Console.WriteLine($"Total Red Diamonds T1 Mined: {totalRedDiamondsT1Mined} out of {totalRedDiamondsT1Seen}");
-            Console.WriteLine($"Total Red Diamonds T2 Mined: {totalRedDiamondsT2Mined} out of {totalRedDiamondsT2Seen}");
-            Console.WriteLine($"Total Red Diamonds T3 Mined: {totalRedDiamondsT3Mined} out of {totalRedDiamondsT3Seen}");
-            Console.WriteLine($"Total Runes T1 Mined: {totalRunesT1Mined} out of {totalRunesT1Seen}");
-            Console.WriteLine($"Total Runes T2 Mined: {totalRunesT2Mined} out of {totalRunesT2Seen}");
-            Console.WriteLine($"Total Runes T3 Mined: {totalRunesT3Mined} out of {totalRunesT3Seen}");
+
+            // Print Diamonds by tier
+            for (int tier = 1; tier <= 3; tier++) {
+                Console.WriteLine($"Total Diamonds T{tier} Mined: {getDiamondsMinedByTier(tier)} out of {getDiamondsSeenByTier(tier)}");
+            }
+
+            // Print Red Diamonds by tier
+            for (int tier = 1; tier <= 3; tier++) {
+                Console.WriteLine($"Total Red Diamonds T{tier} Mined: {getRedDiamondsMinedByTier(tier)} out of {getRedDiamondsSeenByTier(tier)}");
+            }
+
+            // Print Runes by tier
+            for (int tier = 1; tier <= 3; tier++) {
+                Console.WriteLine($"Total Runes T{tier} Mined: {getRunesMinedByTier(tier)} out of {getRunesSeenByTier(tier)}");
+            }
+
             Console.WriteLine($"Total Diamond Value Mined: {totalDiamondValueMined}");
             Console.WriteLine($"Total Red Diamond Value Mined: {totalRedDiamondValueMined}");
             Console.WriteLine("");
             Console.WriteLine("===== Rune simulation statistics =====");
+
             // Adding mined rune statistics by tier
             foreach (Rune.RuneName runeName in Enum.GetValues(typeof(Rune.RuneName))) {
                 for (int tier = 1; tier <= 3; tier++) {
-                    int count = getRunesMinedByTier(runeName, tier);
+                    int count = getRunesMinedByTypeAndTier(runeName, tier);
                     Console.WriteLine($"Total {runeName} T{tier} Mined: {count}");
                 }
             }
         }
+
         // Method to raise the stats changed event
-        private static void OnStatisticsChanged() {
+        private static void onStatisticsChanged() {
             // Check if there are any subscribers to the event
             statisticsChanged?.Invoke();
         }

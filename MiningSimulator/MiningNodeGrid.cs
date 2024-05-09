@@ -43,36 +43,6 @@ namespace MiningSimulator {
                         }
                     } else {
                         node = nodeGenerator.generateRandomNode();
-
-                        switch (node.type.name) {
-                            case MiningNodeType.MiningNodeName.Diamond_T1:
-                                Stats.totalDiamondsT1Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Diamond_T2:
-                                Stats.totalDiamondsT2Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Diamond_T3:
-                                Stats.totalDiamondsT3Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Red_Diamond_T1:
-                                Stats.totalRedDiamondsT1Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Red_Diamond_T2:
-                                Stats.totalRedDiamondsT2Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Red_Diamond_T3:
-                                Stats.totalRedDiamondsT3Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Rune_T1:
-                                Stats.totalRunesT1Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Rune_T2:
-                                Stats.totalRunesT2Seen++;
-                                break;
-                            case MiningNodeType.MiningNodeName.Rune_T3:
-                                Stats.totalRunesT3Seen++;
-                                break;
-                        }
                     }
 
                     node.row = i;
@@ -332,36 +302,6 @@ namespace MiningSimulator {
                 newNode.row = rows - 1;
                 newNode.col = j;
                 grid[rows - 1, j] = newNode;
-
-                switch (newNode.type.name) {
-                    case MiningNodeType.MiningNodeName.Diamond_T1:
-                        Stats.totalDiamondsT1Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Diamond_T2:
-                        Stats.totalDiamondsT2Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Diamond_T3:
-                        Stats.totalDiamondsT3Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Red_Diamond_T1:
-                        Stats.totalRedDiamondsT1Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Red_Diamond_T2:
-                        Stats.totalRedDiamondsT2Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Red_Diamond_T3:
-                        Stats.totalRedDiamondsT3Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Rune_T1:
-                        Stats.totalRunesT1Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Rune_T2:
-                        Stats.totalRunesT2Seen++;
-                        break;
-                    case MiningNodeType.MiningNodeName.Rune_T3:
-                        Stats.totalRunesT3Seen++;
-                        break;
-                }
             }
             // Find new active nodes
             findActiveNodes();
