@@ -323,6 +323,9 @@ namespace MiningSimulator {
             generateNewBottomRow();
         }
         public void generateNewBottomRow() {
+            // Increment the depth mined since we generated a new row
+            Stats.totalDepthMined++;
+
             // Generate a new bottom row
             for (int j = 0; j < cols; j++) {
                 MiningNode newNode = nodeGenerator.generateRandomNode();
@@ -370,7 +373,6 @@ namespace MiningSimulator {
             if (emptyPathToBottomExists()) {
                 shiftGridUp();
             }
-
 
         }
         public void printGridActivityToConsole() {

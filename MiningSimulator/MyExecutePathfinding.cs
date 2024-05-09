@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 using static MiningSimulator.MiningNodeType;
 
 namespace MiningSimulator {
-    public class MyExecutePathfindingComplete : IExecutePathfinding {
+    public class MyExecutePathfinding : IExecutePathfinding {
 
-        public MyExecutePathfindingComplete() {
+        public MyExecutePathfinding() {
 
         }
-        private bool isPointInBounds(MiningNodeGrid miningNodeGrid, Point p) {
+        internal bool isPointInBounds(MiningNodeGrid miningNodeGrid, Point p) {
             if (p.Y >= 0 && p.Y < miningNodeGrid.rows && p.X >= 0 && p.X < miningNodeGrid.cols) {
                 return true;
             } else {
                 return false;
             }
         }
-        private void mineDownShortestPath(MiningNodeGrid miningNodeGrid, (int, List<Point>) shortestPath) {
+        internal void mineDownShortestPath(MiningNodeGrid miningNodeGrid, (int, List<Point>) shortestPath) {
             // Extract the points from the path
             var pathPoints = shortestPath.Item2;
             foreach (var point in pathPoints) {
@@ -33,7 +33,7 @@ namespace MiningSimulator {
             }
         }
         // Method to randomize a list (Fisher-Yates shuffle algorithm)
-        private static void randomizeList<T>(List<T> list) {
+        internal static void randomizeList<T>(List<T> list) {
             int n = list.Count;
             while (n > 1) {
                 n--;
@@ -43,12 +43,12 @@ namespace MiningSimulator {
                 list[n] = value;
             }
         }
-        List<(int, List<Point>)> getShortestPathsFromEmptyNodes(MiningNodeGrid miningNodeGrid, IPathfinding pathfinding, List<MiningNode> startingNodes) {
+        internal List<(int, List<Point>)> getShortestPathsFromEmptyNodes(MiningNodeGrid miningNodeGrid, IPathfinding pathfinding, List<MiningNode> startingNodes) {
             List<(int, List<Point>)> shortestPaths = new List<(int, List<Point>)>();
 
             // Calculate shortest paths to all bottom row nodes from all starting nodes
             foreach (MiningNode startNode in startingNodes) {
-                foreach (MiningNode endNode in miningNodeGrid.getMiningNodesFromRow(miningNodeGrid.rows - 1)){
+                foreach (MiningNode endNode in miningNodeGrid.getMiningNodesFromRow(miningNodeGrid.rows - 1)) {
                     var pathFromStartToEnd = pathfinding.getShortestPath(miningNodeGrid, startNode.positionToPoint(), endNode.positionToPoint());
                     shortestPaths.Add(pathFromStartToEnd);
                 }
@@ -57,7 +57,7 @@ namespace MiningSimulator {
             return shortestPaths;
         }
 
-        public bool mineDownOneLevel(MiningNodeGrid miningNodeGrid, IPathfinding pathfinding) {
+        public virtual bool mineDownOneLevel(MiningNodeGrid miningNodeGrid, IPathfinding pathfinding) {
             if (Globals.debug) {
                 Console.WriteLine($"Mine down one level");
             }
@@ -92,7 +92,6 @@ namespace MiningSimulator {
                     }
                     return false;
                 } else {
-                    Stats.totalDepthMined++;
                     return true;
                 }
 
@@ -146,14 +145,15 @@ namespace MiningSimulator {
                                 if (selectedNode != null && shortestPathPoints != null) {
                                     foreach (Point p in shortestPathPoints) {
                                         MiningNode pathNode = miningNodeGrid.grid[p.Y, p.X];
-                                        
+
                                         // Dont try to click inactive nodes
                                         if (pathNode.type.name != MiningNodeName.Empty) {
                                             miningNodeGrid.clickNode(pathNode.row, pathNode.col);
 
-                                            //  If mining the node will cause the grid to shift restart the loop
-                                            if (pathNode.row == miningNodeGrid.rows - 1 && pathNode != interestingItem) {
-                                                return false; // Return from function and do not mine down a level
+                                            //  If mining the node caused the grid to shift restart the loop
+                                            if (pathNode.row == miningNodeGrid.rows - 1) {
+                                                // Return from function and do not mine down a level
+                                                return false; 
                                             }
                                             Thread.Sleep(Globals.miningDelay);
                                         }

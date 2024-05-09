@@ -201,11 +201,19 @@ namespace MiningSimulator {
         
 
         private void backgroundWorkerMiner_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {
-            IPathfinding dijkstraPathfinding = new DijkstraPathfindingComplete();
-            IPathfinding aStarPathfinding = new AStarPathfindingComplete();
-            IExecutePathfinding myExecutePathFinding = new MyExecutePathfindingComplete();
+            IPathfinding dijkstraPathfinding = new DijkstraPathfinding();
+            IPathfinding aStarPathfinding = new AStarPathfinding();
+            IExecutePathfinding myExecutePathFinding = new MyExecutePathfinding();
+            IExecutePathfinding myExecutePathFindingWeightedToCenter = new MyExecutePathfindingWeightedToCenter();
 
-            IPathfinding pathfinding = dijkstraPathfinding;
+
+            //IPathfinding pathfinding = dijkstraPathfinding;
+            IPathfinding pathfinding = aStarPathfinding;
+
+            //IExecutePathfinding executePathFinding = myExecutePathFinding;
+            IExecutePathfinding executePathFinding = myExecutePathFindingWeightedToCenter;
+            
+
 
             bool depthMining = depthToMine > 0;
             bool pickMining = picksToUse > 0;
@@ -227,10 +235,10 @@ namespace MiningSimulator {
                     break;
                 }
 
-                bool mineDown = myExecutePathFinding.mineInterestingItems(miningNodeGrid, pathfinding);
+                bool mineDown = executePathFinding.mineInterestingItems(miningNodeGrid, pathfinding);
 
                 if (mineDown) {
-                    bool mineDownComplete = myExecutePathFinding.mineDownOneLevel(miningNodeGrid, pathfinding);
+                    bool mineDownComplete = executePathFinding.mineDownOneLevel(miningNodeGrid, pathfinding);
 
                     if (!mineDownComplete) {
                         break;
@@ -246,6 +254,7 @@ namespace MiningSimulator {
         }
         private void btnStartMining_Click(object sender, EventArgs e) {
             Globals.pickDamage = (int)numericUpDownPickDamage.Value;
+            Globals.miningDelay = (int)numericUpDownMiningSpeed.Value;
             minerActive = !minerActive;
 
             this.miningNodeGrid = new MiningNodeGrid(5, 7);
@@ -265,6 +274,7 @@ namespace MiningSimulator {
         }
         private void btnMineToDepth_Click(object sender, EventArgs e) {
             Globals.pickDamage = (int)numericUpDownPickDamage.Value;
+            Globals.miningDelay = (int)numericUpDownMiningSpeed.Value;
             depthToMine = (int)numericUpDownDepth.Value;
             minerActive = !minerActive;
             disableControls();
@@ -287,8 +297,10 @@ namespace MiningSimulator {
 
         private void btnMineToPickCount_Click(object sender, EventArgs e) {
             Globals.pickDamage = (int)numericUpDownPickDamage.Value;
+            Globals.miningDelay = (int)numericUpDownMiningSpeed.Value;
             picksToUse = (int)numericUpDownPickCount.Value;
             minerActive = !minerActive;
+            disableControls();
 
             this.miningNodeGrid = new MiningNodeGrid(5, 7);
             miningNodeGrid.initGrid();
@@ -301,7 +313,6 @@ namespace MiningSimulator {
 
             miningNodeGrid.findActiveNodes();
 
-            disableControls();
             if (!backgroundWorkerMiner.IsBusy) {
                 backgroundWorkerMiner.RunWorkerAsync();
             }

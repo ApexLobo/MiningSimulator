@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using static MiningSimulator.MiningNodeType;
 
 namespace MiningSimulator {
-    public class DijkstraPathfindingComplete : IPathfinding {
-        public DijkstraPathfindingComplete() {
+    public class AStarPathfinding : IPathfinding {
+        public AStarPathfinding() {
         }
         public bool areNeighborsActive(MiningNodeGrid miningNodeGrid, MiningNode node) {
             int row = node.row;
@@ -102,6 +102,10 @@ namespace MiningSimulator {
             }
             return items;
         }
+        // Method to calculate the heuristic function (Manhattan distance)
+        private double HeuristicFunction(Point current, Point endNode) {
+            return Math.Abs(current.X - endNode.X) + Math.Abs(current.Y - endNode.Y);
+        }
         public (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, Point endNode) {
             // Create a directed graph representing the grid
             var graph = new BidirectionalGraph<Point, TaggedEdge<Point, int>>();
@@ -133,8 +137,13 @@ namespace MiningSimulator {
                     }
                 }
             }
-            // Use Dijkstra's algorithm to find the shortest path
-            var tryGetPaths = graph.ShortestPathsDijkstra(edge => edge.Tag, startNode);
+
+            // Use A* algorithm to find the shortest path
+            var tryGetPaths = graph.ShortestPathsAStar(
+                edge => edge.Tag, // Cost function
+                (node) => HeuristicFunction(node, endNode), // Heuristic function
+                startNode); // Start node
+
             IEnumerable<TaggedEdge<Point, int>> shortestPath;
 
             int totalCost = 0;
@@ -147,7 +156,7 @@ namespace MiningSimulator {
                     totalCost += edge.Tag;
                 }
                 // Add the destination node to the path
-                path.Add(endNode); 
+                path.Add(endNode);
             } else {
                 if (Globals.debug) {
                     Console.WriteLine("No path found.");
@@ -156,6 +165,5 @@ namespace MiningSimulator {
 
             return (totalCost, path);
         }
-
     }
 }
