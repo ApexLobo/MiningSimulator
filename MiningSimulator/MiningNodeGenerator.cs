@@ -40,7 +40,7 @@ namespace MiningSimulator {
 
 
             // Generate a random number between 0 and totalWeight
-            double randomNumber = Globals.random.Next(totalWeight);
+            double randomNumber = Globals.randomMineGeneration.Next(totalWeight);
 
 
             // Select the node based on the random number

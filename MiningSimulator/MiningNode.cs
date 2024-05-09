@@ -79,37 +79,37 @@ namespace MiningSimulator {
                     typeImage = Properties.Resources.d_t1;
                     this.cost = 1;
                     this.importance = 1;
-                    this.rewardValue = Globals.random.Next(10, 31);
+                    this.rewardValue = Globals.randomMineGeneration.Next(10, 31);
                     break;
                 case MiningNodeName.Diamond_T2:
                     typeImage = Properties.Resources.d_t2;
                     this.cost = 1;
                     this.importance = 2;
-                    this.rewardValue = Globals.random.Next(100, 301);
+                    this.rewardValue = Globals.randomMineGeneration.Next(100, 301);
                     break;
                 case MiningNodeName.Diamond_T3:
                     typeImage = Properties.Resources.d_t3;
                     this.cost = 1;
                     this.importance = 3;
-                    this.rewardValue = Globals.random.Next(1000, 3001);
+                    this.rewardValue = Globals.randomMineGeneration.Next(1000, 3001);
                     break;
                 case MiningNodeName.Red_Diamond_T1:
                     typeImage = Properties.Resources.rd_t1;
                     this.cost = 2;
                     this.importance = 4;
-                    this.rewardValue = Globals.random.Next(1, 4);
+                    this.rewardValue = Globals.randomMineGeneration.Next(1, 4);
                     break;
                 case MiningNodeName.Red_Diamond_T2:
                     typeImage = Properties.Resources.rd_t2;
                     this.cost = 2;
                     this.importance = 5;
-                    this.rewardValue = Globals.random.Next(4, 11);
+                    this.rewardValue = Globals.randomMineGeneration.Next(4, 11);
                     break;
                 case MiningNodeName.Red_Diamond_T3:
                     typeImage = Properties.Resources.rd_t3;
                     this.cost = 2;
                     this.importance = 6;
-                    this.rewardValue = Globals.random.Next(11, 21);
+                    this.rewardValue = Globals.randomMineGeneration.Next(11, 21);
                     break;
                 case MiningNodeName.Rune_T1:
                     typeImage = Properties.Resources.rune_t1;

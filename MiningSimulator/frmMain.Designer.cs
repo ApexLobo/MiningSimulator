@@ -337,7 +337,7 @@
             numericUpDownPickCount.Name = "numericUpDownPickCount";
             numericUpDownPickCount.Size = new Size(133, 23);
             numericUpDownPickCount.TabIndex = 30;
-            numericUpDownPickCount.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDownPickCount.Value = new decimal(new int[] { 3000, 0, 0, 0 });
             numericUpDownPickCount.ValueChanged += numericUpDownPickCount_ValueChanged;
             numericUpDownPickCount.KeyPress += numericUpDown_KeyPress;
             // 
@@ -388,7 +388,7 @@
             numericUpDownPickDamage.Name = "numericUpDownPickDamage";
             numericUpDownPickDamage.Size = new Size(133, 23);
             numericUpDownPickDamage.TabIndex = 27;
-            numericUpDownPickDamage.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownPickDamage.Value = new decimal(new int[] { 3, 0, 0, 0 });
             numericUpDownPickDamage.ValueChanged += numericUpDownPickDamage_ValueChanged;
             numericUpDownPickDamage.KeyPress += numericUpDown_KeyPress;
             // 
@@ -429,7 +429,7 @@
             numericUpDownDepth.Name = "numericUpDownDepth";
             numericUpDownDepth.Size = new Size(133, 23);
             numericUpDownDepth.TabIndex = 24;
-            numericUpDownDepth.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDownDepth.Value = new decimal(new int[] { 1500, 0, 0, 0 });
             numericUpDownDepth.ValueChanged += numericUpDownDepth_ValueChanged;
             numericUpDownDepth.KeyPress += numericUpDown_KeyPress;
             // 

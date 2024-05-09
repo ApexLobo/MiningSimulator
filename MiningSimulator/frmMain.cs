@@ -198,17 +198,14 @@ namespace MiningSimulator {
             }
         }
 
-        private void btnStartMining_Click(object sender, EventArgs e) {
-            minerActive = !minerActive;
-
-            if (!backgroundWorkerMiner.IsBusy) {
-                backgroundWorkerMiner.RunWorkerAsync();
-            }
-        }
+        
 
         private void backgroundWorkerMiner_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {
-            IPathfinding pathfinding = new DijkstraPathfindingComplete();
+            IPathfinding dijkstraPathfinding = new DijkstraPathfindingComplete();
+            IPathfinding aStarPathfinding = new AStarPathfindingComplete();
             IExecutePathfinding myExecutePathFinding = new MyExecutePathfindingComplete();
+
+            IPathfinding pathfinding = dijkstraPathfinding;
 
             bool depthMining = depthToMine > 0;
             bool pickMining = picksToUse > 0;
@@ -247,18 +244,62 @@ namespace MiningSimulator {
         private void backgroundWorkerMiner_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             enableControls();
         }
+        private void btnStartMining_Click(object sender, EventArgs e) {
+            Globals.pickDamage = (int)numericUpDownPickDamage.Value;
+            minerActive = !minerActive;
+
+            this.miningNodeGrid = new MiningNodeGrid(5, 7);
+            miningNodeGrid.initGrid();
+
+            // Subscribe to the GridUpdated event
+            miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+
+            initDataGridView();
+            populateDataGridView();
+
+            miningNodeGrid.findActiveNodes();
+
+            if (!backgroundWorkerMiner.IsBusy) {
+                backgroundWorkerMiner.RunWorkerAsync();
+            }
+        }
         private void btnMineToDepth_Click(object sender, EventArgs e) {
+            Globals.pickDamage = (int)numericUpDownPickDamage.Value;
             depthToMine = (int)numericUpDownDepth.Value;
             minerActive = !minerActive;
             disableControls();
+
+            this.miningNodeGrid = new MiningNodeGrid(5, 7);
+            miningNodeGrid.initGrid();
+
+            // Subscribe to the GridUpdated event
+            miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+
+            initDataGridView();
+            populateDataGridView();
+
+            miningNodeGrid.findActiveNodes();
+
             if (!backgroundWorkerMiner.IsBusy) {
                 backgroundWorkerMiner.RunWorkerAsync();
             }
         }
 
         private void btnMineToPickCount_Click(object sender, EventArgs e) {
+            Globals.pickDamage = (int)numericUpDownPickDamage.Value;
             picksToUse = (int)numericUpDownPickCount.Value;
             minerActive = !minerActive;
+
+            this.miningNodeGrid = new MiningNodeGrid(5, 7);
+            miningNodeGrid.initGrid();
+
+            // Subscribe to the GridUpdated event
+            miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+
+            initDataGridView();
+            populateDataGridView();
+
+            miningNodeGrid.findActiveNodes();
 
             disableControls();
             if (!backgroundWorkerMiner.IsBusy) {

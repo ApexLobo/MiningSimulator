@@ -8,7 +8,9 @@ using static MiningSimulator.MiningNodeType;
 namespace MiningSimulator {
     public static class Globals {
         public static readonly int randomSeed = 12345678;
-        public static Random random = new Random(randomSeed);
+        public static Random randomMineGeneration = new Random(randomSeed);
+        public static Random randomRuneGeneration = new Random(randomSeed);
+        public static Random randomPathfinding = new Random(randomSeed);
         public static readonly bool debug = false;
         public static readonly bool allowMoveDown = true;
         public static readonly MiningNodeName[] interestingItems = { MiningNodeName.Rune_T3, MiningNodeName.Rune_T2, MiningNodeName.Red_Diamond_T3, MiningNodeName.Red_Diamond_T2 };

@@ -28,7 +28,7 @@ namespace MiningSimulator {
             this.tier = tier;
 
             // Generates a random number between 0 and 9
-            int randomRuneIndex = Globals.random.Next(10);
+            int randomRuneIndex = Globals.randomRuneGeneration.Next(10);
 
             // Assigning the corresponding RuneName based on the random index
             this.name = (RuneName)randomRuneIndex;
