@@ -1,0 +1,611 @@
+{
+	"shiftedNodes": [
+		{
+			"row": 0,
+			"col": 0,
+			"size": 88,
+			"type": {
+				"name": 1,
+				"cost": 1,
+				"active": false,
+				"typeImage": "dirt",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		},
+		{
+			"row": 0,
+			"col": 1,
+			"size": 88,
+			"type": {
+				"name": 0,
+				"cost": 0,
+				"active": false,
+				"typeImage": "empty_space",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		},
+		{
+			"row": 0,
+			"col": 2,
+			"size": 88,
+			"type": {
+				"name": 2,
+				"cost": 2,
+				"active": true,
+				"typeImage": "light_rock",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		},
+		{
+			"row": 0,
+			"col": 3,
+			"size": 88,
+			"type": {
+				"name": 0,
+				"cost": 0,
+				"active": true,
+				"typeImage": "empty_space",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		},
+		{
+			"row": 0,
+			"col": 4,
+			"size": 88,
+			"type": {
+				"name": 1,
+				"cost": 1,
+				"active": true,
+				"typeImage": "dirt",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		},
+		{
+			"row": 0,
+			"col": 5,
+			"size": 88,
+			"type": {
+				"name": 1,
+				"cost": 1,
+				"active": false,
+				"typeImage": "dirt",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		},
+		{
+			"row": 0,
+			"col": 6,
+			"size": 88,
+			"type": {
+				"name": 3,
+				"cost": 5,
+				"active": false,
+				"typeImage": "dark_rock",
+				"importance": 0,
+				"rewardValue": 0,
+				"rune": null
+			}
+		}
+	],
+	"rows": 5,
+	"cols": 7,
+	"nodeSize": 88,
+	"grid": [
+		[
+			{
+				"row": 0,
+				"col": 0,
+				"size": 88,
+				"type": {
+					"name": 0,
+					"cost": 0,
+					"active": false,
+					"typeImage": "empty_space",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 0,
+				"col": 1,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 0,
+				"col": 2,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": true,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 0,
+				"col": 3,
+				"size": 88,
+				"type": {
+					"name": 0,
+					"cost": 0,
+					"active": true,
+					"typeImage": "empty_space",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 0,
+				"col": 4,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": true,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 0,
+				"col": 5,
+				"size": 88,
+				"type": {
+					"name": 4,
+					"cost": 10,
+					"active": false,
+					"typeImage": "solid_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 0,
+				"col": 6,
+				"size": 88,
+				"type": {
+					"name": 3,
+					"cost": 5,
+					"active": false,
+					"typeImage": "dark_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			}
+		],
+		[
+			{
+				"row": 1,
+				"col": 0,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 1,
+				"col": 1,
+				"size": 88,
+				"type": {
+					"name": 12,
+					"cost": 20,
+					"active": false,
+					"typeImage": "rune_t2",
+					"importance": 8,
+					"rewardValue": 1,
+					"rune": {
+						"tier": 2,
+						"name": 2
+					}
+				}
+			},
+			{
+				"row": 1,
+				"col": 2,
+				"size": 88,
+				"type": {
+					"name": 2,
+					"cost": 2,
+					"active": true,
+					"typeImage": "light_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 1,
+				"col": 3,
+				"size": 88,
+				"type": {
+					"name": 0,
+					"cost": 0,
+					"active": true,
+					"typeImage": "empty_space",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 1,
+				"col": 4,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": true,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 1,
+				"col": 5,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 1,
+				"col": 6,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			}
+		],
+		[
+			{
+				"row": 2,
+				"col": 0,
+				"size": 88,
+				"type": {
+					"name": 3,
+					"cost": 5,
+					"active": false,
+					"typeImage": "dark_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 2,
+				"col": 1,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 2,
+				"col": 2,
+				"size": 88,
+				"type": {
+					"name": 5,
+					"cost": 1,
+					"active": true,
+					"typeImage": "d_t1",
+					"importance": 1,
+					"rewardValue": 23,
+					"rune": null
+				}
+			},
+			{
+				"row": 2,
+				"col": 3,
+				"size": 88,
+				"type": {
+					"name": 0,
+					"cost": 0,
+					"active": true,
+					"typeImage": "empty_space",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 2,
+				"col": 4,
+				"size": 88,
+				"type": {
+					"name": 10,
+					"cost": 2,
+					"active": true,
+					"typeImage": "rd_t3",
+					"importance": 6,
+					"rewardValue": 16,
+					"rune": null
+				}
+			},
+			{
+				"row": 2,
+				"col": 5,
+				"size": 88,
+				"type": {
+					"name": 2,
+					"cost": 2,
+					"active": false,
+					"typeImage": "light_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 2,
+				"col": 6,
+				"size": 88,
+				"type": {
+					"name": 3,
+					"cost": 5,
+					"active": false,
+					"typeImage": "dark_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			}
+		],
+		[
+			{
+				"row": 3,
+				"col": 0,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "rd_t3",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 3,
+				"col": 1,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 3,
+				"col": 2,
+				"size": 88,
+				"type": {
+					"name": 3,
+					"cost": 5,
+					"active": true,
+					"typeImage": "dark_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 3,
+				"col": 3,
+				"size": 88,
+				"type": {
+					"name": 0,
+					"cost": 0,
+					"active": true,
+					"typeImage": "empty_space",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 3,
+				"col": 4,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": true,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 3,
+				"col": 5,
+				"size": 88,
+				"type": {
+					"name": 9,
+					"cost": 2,
+					"active": false,
+					"typeImage": "rd_t2",
+					"importance": 5,
+					"rewardValue": 10,
+					"rune": null
+				}
+			},
+			{
+				"row": 3,
+				"col": 6,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			}
+		],
+		[
+			{
+				"row": 4,
+				"col": 0,
+				"size": 88,
+				"type": {
+					"name": 10,
+					"cost": 2,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 6,
+					"rewardValue": 19,
+					"rune": null
+				}
+			},
+			{
+				"row": 4,
+				"col": 1,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 4,
+				"col": 2,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 4,
+				"col": 3,
+				"size": 88,
+				"type": {
+					"name": 8,
+					"cost": 2,
+					"active": true,
+					"typeImage": "rd_t1",
+					"importance": 4,
+					"rewardValue": 2,
+					"rune": null
+				}
+			},
+			{
+				"row": 4,
+				"col": 4,
+				"size": 88,
+				"type": {
+					"name": 1,
+					"cost": 1,
+					"active": false,
+					"typeImage": "dirt",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 4,
+				"col": 5,
+				"size": 88,
+				"type": {
+					"name": 0,
+					"cost": 0,
+					"active": false,
+					"typeImage": "empty_space",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			},
+			{
+				"row": 4,
+				"col": 6,
+				"size": 88,
+				"type": {
+					"name": 2,
+					"cost": 2,
+					"active": false,
+					"typeImage": "light_rock",
+					"importance": 0,
+					"rewardValue": 0,
+					"rune": null
+				}
+			}
+		]
+	],
+	"nodeGenerator": {}
+}

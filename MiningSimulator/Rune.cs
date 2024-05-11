@@ -33,5 +33,14 @@ namespace MiningSimulator {
             // Assigning the corresponding RuneName based on the random index
             this.name = (RuneName)randomRuneIndex;
         }
+        public Rune() {
+
+        }
+        public Rune clone() {
+            var clone = new Rune();
+            clone.tier = this.tier;
+            clone.name = this.name; 
+            return clone;
+        }
     }
 }

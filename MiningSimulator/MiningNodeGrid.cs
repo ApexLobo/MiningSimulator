@@ -19,7 +19,9 @@ namespace MiningSimulator {
         public event EventHandler gridUpdatedEvent;
 
         public List<MiningNode> shiftedNodes = new List<MiningNode>();
+        public MiningNodeGrid() {
 
+        }
         public MiningNodeGrid(int rows, int cols, int nodeSize = 88) {
             this.rows = rows;
             this.cols = cols;
@@ -57,7 +59,27 @@ namespace MiningSimulator {
                 shiftedNodes.Add(initShiftedNode);
             }
         }
+        public MiningNodeGrid clone() {
+            var clone = new MiningNodeGrid();
+            clone.rows = this.rows;
+            clone.cols = this.cols;
+            clone.nodeSize = this.nodeSize;
+            clone.grid = new MiningNode[rows, cols];
+            clone.nodeGenerator = new MiningNodeGenerator();
 
+            for (int row = 0; row < this.rows; row++) {
+                for (int col = 0; col < this.cols; col++) {
+                    clone.grid[row, col] = this.grid[row, col].clone();
+                }
+            }
+            return clone;
+        }
+
+        public void updateNodeCostsBasedOnPickDamage() {
+            foreach (MiningNode node in grid) {
+                node.type.updateCostBasedOnPickDamage();
+            }
+        }
         public List<MiningNode> getMiningNodesFromRow(int row) {
             List<MiningNode> nodes = new List<MiningNode>();
 

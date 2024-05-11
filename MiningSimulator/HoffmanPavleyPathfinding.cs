@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using static MiningSimulator.MiningNodeType;
 
 namespace MiningSimulator {
-    public class AStarPathfinding : IPathfinding {
-        public AStarPathfinding() {
+    public class HoffmanPavleyPathfinding : IPathfinding {
+
+        public HoffmanPavleyPathfinding() {
         }
         public bool areNeighborsActive(MiningNodeGrid miningNodeGrid, MiningNode node) {
             int row = node.row;
@@ -104,10 +105,6 @@ namespace MiningSimulator {
             items = items.OrderByDescending(node => node).ToList();
             return items;
         }
-        // Method to calculate the heuristic function (Manhattan distance)
-        internal double HeuristicFunction(Point current, Point endNode) {
-            return Math.Abs(current.X - endNode.X) + Math.Abs(current.Y - endNode.Y);
-        }
         internal void buildGraphVerticesAndEdges(BidirectionalGraph<Point, TaggedEdge<Point, int>> graph, MiningNodeGrid miningNodeGrid) {
             for (int row = 0; row < miningNodeGrid.rows; row++) {
                 for (int col = 0; col < miningNodeGrid.cols; col++) {
@@ -137,39 +134,61 @@ namespace MiningSimulator {
                 }
             }
         }
-        public virtual (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, Point endNode) {
+
+        public (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, Point endNode) {
             // Create a directed graph representing the grid
             var graph = new BidirectionalGraph<Point, TaggedEdge<Point, int>>();
 
             // Add vertices and edges to the graph
             buildGraphVerticesAndEdges(graph, miningNodeGrid);
 
-            // Use A* algorithm to find the shortest path
-            var tryGetPaths = graph.ShortestPathsAStar(
-                edge => edge.Tag, // Cost function
-                (node) => HeuristicFunction(node, endNode), // Heuristic function
-                startNode); // Start node
+            // Create a function to get the weight of an edge
+            Func<TaggedEdge<Point, int>, double> edgeCost = edge => edge.Tag;
 
-            IEnumerable<TaggedEdge<Point, int>> shortestPath;
+            // Compute the K shortest paths
+            var paths = graph.RankedShortestPathHoffmanPavley(edgeCost, startNode, endNode, 10);
 
-            int totalCost = 0;
-            List<Point> path = new List<Point>();
-            if (tryGetPaths(endNode, out shortestPath)) {
-                foreach (var edge in shortestPath) {
-                    if (edge.Source != startNode) {
-                        path.Add(edge.Source);
+
+            // Calculate the cost of the shortest path
+            int shortestPathCost = paths.First().Sum(edge => edge.Tag);
+
+            // Filter the paths to include only those with the same cost as the shortest path
+            var shortestPaths = paths.Where(path => path.Sum(edge => edge.Tag) == shortestPathCost);
+
+            int shortestPathsCount = shortestPaths.Count();
+            if (shortestPathsCount > 1) {
+                Console.WriteLine($"More than 1 shortest path = {shortestPathsCount}");
+                foreach (var path in shortestPaths) {
+                    int totalCost = path.Sum(edge => edge.Tag);
+                    Console.WriteLine($"Path with total cost {totalCost}:");
+                    foreach (var edge in path) {
+                        Console.WriteLine($"({edge.Source.X}, {edge.Source.Y}) to ({edge.Target.X}, {edge.Target.Y})");
                     }
-                    totalCost += edge.Tag;
+                    Console.WriteLine("\n");
                 }
-                // Add the destination node to the path
-                path.Add(endNode);
             } else {
-                if (Globals.debug) {
-                    Console.WriteLine("No path found.");
+                Console.WriteLine($"Only 1 shortest path");
+                var path = paths.First();
+                int totalCost = path.Sum(edge => edge.Tag);
+                Console.WriteLine($"Path with total cost {totalCost}:");
+                foreach (var edge in path) {
+                    Console.WriteLine($"({edge.Source.X}, {edge.Source.Y}) to ({edge.Target.X}, {edge.Target.Y})");
                 }
+                Console.WriteLine("\n");
             }
+            /*
+            foreach (var path in paths) {
+                int totalCost = path.Sum(edge => edge.Tag);
+                Console.WriteLine($"Path with total cost {totalCost}:");
+                foreach (var edge in path) {
+                    Console.WriteLine($"({edge.Source.X}, {edge.Source.Y}) to ({edge.Target.X}, {edge.Target.Y})");
+                }
+                Console.WriteLine("\n");
+            }*/
 
-            return (totalCost, path);
+            // Return the shortest path
+            var shortestPath = paths.First();
+            return (shortestPath.Sum(edge => edge.Tag), shortestPath.Select(edge => edge.Target).ToList());
         }
     }
 }

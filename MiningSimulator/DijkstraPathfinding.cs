@@ -66,7 +66,7 @@ namespace MiningSimulator {
         public List<MiningNode> getStartingNodes(MiningNodeGrid miningNodeGrid) {
             List<MiningNode> results = new List<MiningNode>();
 
-            //There must always be an empty space on the row above the mining line
+            // Add all empty active nodes to the list of starting nodes
             for (int row = 0; row < miningNodeGrid.rows; row++) {
                 for (int col = 0; col < miningNodeGrid.cols; col++) {
                     MiningNode node = miningNodeGrid.grid[row, col];
@@ -100,12 +100,11 @@ namespace MiningSimulator {
                     }
                 }
             }
+            // Sort the list by importance, activity and row
+            items = items.OrderByDescending(node => node).ToList();
             return items;
         }
-        public (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, Point endNode) {
-            // Create a directed graph representing the grid
-            var graph = new BidirectionalGraph<Point, TaggedEdge<Point, int>>();
-            // Add vertices and edges to the graph
+        internal void buildGraphVerticesAndEdges(BidirectionalGraph<Point, TaggedEdge<Point, int>> graph, MiningNodeGrid miningNodeGrid) {
             for (int row = 0; row < miningNodeGrid.rows; row++) {
                 for (int col = 0; col < miningNodeGrid.cols; col++) {
                     var nodePosition = new Point(col, row);
@@ -133,6 +132,14 @@ namespace MiningSimulator {
                     }
                 }
             }
+        }
+        public (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, Point endNode) {
+            // Create a directed graph representing the grid
+            var graph = new BidirectionalGraph<Point, TaggedEdge<Point, int>>();
+
+            // Add vertices and edges to the graph
+            buildGraphVerticesAndEdges(graph, miningNodeGrid);
+
             // Use Dijkstra's algorithm to find the shortest path
             var tryGetPaths = graph.ShortestPathsDijkstra(edge => edge.Tag, startNode);
             IEnumerable<TaggedEdge<Point, int>> shortestPath;

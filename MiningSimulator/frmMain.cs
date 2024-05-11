@@ -1,6 +1,8 @@
 using Microsoft.VisualBasic.Devices;
 using MiningSimulator.Properties;
+using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Windows.Forms;
@@ -198,21 +200,24 @@ namespace MiningSimulator {
             }
         }
 
-        
+
 
         private void backgroundWorkerMiner_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {
             IPathfinding dijkstraPathfinding = new DijkstraPathfinding();
             IPathfinding aStarPathfinding = new AStarPathfinding();
+            IPathfinding hoffmanPavleyPathfinding = new HoffmanPavleyPathfinding();
+
             IExecutePathfinding myExecutePathFinding = new MyExecutePathfinding();
             IExecutePathfinding myExecutePathFindingWeightedToCenter = new MyExecutePathfindingWeightedToCenter();
 
 
             //IPathfinding pathfinding = dijkstraPathfinding;
-            IPathfinding pathfinding = aStarPathfinding;
+            //IPathfinding pathfinding = aStarPathfinding;
+            IPathfinding pathfinding = hoffmanPavleyPathfinding;
 
             //IExecutePathfinding executePathFinding = myExecutePathFinding;
             IExecutePathfinding executePathFinding = myExecutePathFindingWeightedToCenter;
-            
+
 
 
             bool depthMining = depthToMine > 0;
@@ -257,17 +262,19 @@ namespace MiningSimulator {
             Globals.miningDelay = (int)numericUpDownMiningSpeed.Value;
             minerActive = !minerActive;
 
-            this.miningNodeGrid = new MiningNodeGrid(5, 7);
-            miningNodeGrid.initGrid();
 
-            // Subscribe to the GridUpdated event
-            miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+            if (miningNodeGrid == null) {
+                this.miningNodeGrid = new MiningNodeGrid(5, 7);
+                miningNodeGrid.initGrid();
 
-            initDataGridView();
-            populateDataGridView();
+                // Subscribe to the GridUpdated event
+                miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
 
-            miningNodeGrid.findActiveNodes();
+                initDataGridView();
+                populateDataGridView();
 
+                miningNodeGrid.findActiveNodes();
+            }
             if (!backgroundWorkerMiner.IsBusy) {
                 backgroundWorkerMiner.RunWorkerAsync();
             }
@@ -279,17 +286,18 @@ namespace MiningSimulator {
             minerActive = !minerActive;
             disableControls();
 
-            this.miningNodeGrid = new MiningNodeGrid(5, 7);
-            miningNodeGrid.initGrid();
+            if (miningNodeGrid == null) {
+                this.miningNodeGrid = new MiningNodeGrid(5, 7);
+                miningNodeGrid.initGrid();
 
-            // Subscribe to the GridUpdated event
-            miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+                // Subscribe to the GridUpdated event
+                miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
 
-            initDataGridView();
-            populateDataGridView();
+                initDataGridView();
+                populateDataGridView();
 
-            miningNodeGrid.findActiveNodes();
-
+                miningNodeGrid.findActiveNodes();
+            }
             if (!backgroundWorkerMiner.IsBusy) {
                 backgroundWorkerMiner.RunWorkerAsync();
             }
@@ -302,17 +310,18 @@ namespace MiningSimulator {
             minerActive = !minerActive;
             disableControls();
 
-            this.miningNodeGrid = new MiningNodeGrid(5, 7);
-            miningNodeGrid.initGrid();
+            if (miningNodeGrid == null) {
+                this.miningNodeGrid = new MiningNodeGrid(5, 7);
+                miningNodeGrid.initGrid();
 
-            // Subscribe to the GridUpdated event
-            miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+                // Subscribe to the GridUpdated event
+                miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
 
-            initDataGridView();
-            populateDataGridView();
+                initDataGridView();
+                populateDataGridView();
 
-            miningNodeGrid.findActiveNodes();
-
+                miningNodeGrid.findActiveNodes();
+            }
             if (!backgroundWorkerMiner.IsBusy) {
                 backgroundWorkerMiner.RunWorkerAsync();
             }
@@ -368,6 +377,75 @@ namespace MiningSimulator {
         private void numericUpDownPickCount_ValueChanged(object sender, EventArgs e) {
             numericUpDownPickCount.Text = numericUpDownPickCount.Value.ToString();
             picksToUse = (int)numericUpDownPickDamage.Value;
+        }
+
+        private void btnSaveState_Click(object sender, EventArgs e) {
+            // Create a SaveFileDialog to choose the location to save the state
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json";
+            saveFileDialog.DefaultExt = "json";
+            saveFileDialog.AddExtension = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK) {
+                // Serialize the MiningNodeGrid to a JSON string
+                string json = JsonConvert.SerializeObject(miningNodeGrid, new BitmapJsonConverter());
+
+                // Write the JSON string to a file
+                System.IO.File.WriteAllText(saveFileDialog.FileName, json);
+            }
+        }
+
+        private void btnLoadState_Click(object sender, EventArgs e) {
+            // Create an OpenFileDialog to choose the file to load the state from
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json";
+            openFileDialog.DefaultExt = "json";
+            openFileDialog.AddExtension = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                // Read the JSON string from the file
+                string json = File.ReadAllText(openFileDialog.FileName);
+
+                // Deserialize the JSON string back into a MiningNodeGrid object
+                miningNodeGrid = JsonConvert.DeserializeObject<MiningNodeGrid>(json, new BitmapJsonConverter());
+
+                // Subscribe to the GridUpdated event
+                miningNodeGrid.gridUpdatedEvent += gridUpdatedHandler;
+
+                // Refresh the DataGridView to reflect the changes
+                initDataGridView();
+                populateDataGridView();
+                dataGridViewNodes.Invalidate();
+                dataGridViewNodes.Update();
+            }
+        }
+
+        private void btnPrintSTSPPath_Click(object sender, EventArgs e) {
+            Globals.pickDamage = (int)numericUpDownPickDamage.Value;
+            miningNodeGrid.updateNodeCostsBasedOnPickDamage();
+
+            //IExecutePathfinding myExecutePathFinding = new MyExecutePathfinding();
+            TravelingSalesmanPathfinding pathfinding = new TravelingSalesmanPathfinding();
+
+            List<MiningNode> interestingItems = pathfinding.getInterestingItemsToMine(miningNodeGrid);
+            List<Point> interestingPoints = new List<Point>();
+
+            foreach (MiningNode interestingItem in interestingItems) {
+                Console.WriteLine($"InterestingItem: {interestingItem}");
+                interestingPoints.Add(interestingItem.positionToPoint());
+            }
+
+            var path = pathfinding.getShortestPath(miningNodeGrid, new Point(3, 3), interestingPoints);
+
+            int totalCost = (int)path.Item1;
+
+            if (totalCost >= 0) {
+                Console.WriteLine($"Path with total cost {totalCost}:");
+                foreach (var point in path.Item2) {
+                    Console.WriteLine($"({point.Y}, {point.X})");
+                }
+                Console.WriteLine("\n");
+            }
         }
     }
 }

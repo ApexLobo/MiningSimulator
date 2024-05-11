@@ -1,15 +1,17 @@
 ﻿using QuikGraph;
 using QuikGraph.Algorithms;
+using QuikGraph.Algorithms.TSP;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static MiningSimulator.MiningNodeType;
 
 namespace MiningSimulator {
-    public class AStarPathfinding : IPathfinding {
-        public AStarPathfinding() {
+    public class TravelingSalesmanPathfinding {
+        public TravelingSalesmanPathfinding() {
         }
         public bool areNeighborsActive(MiningNodeGrid miningNodeGrid, MiningNode node) {
             int row = node.row;
@@ -104,10 +106,6 @@ namespace MiningSimulator {
             items = items.OrderByDescending(node => node).ToList();
             return items;
         }
-        // Method to calculate the heuristic function (Manhattan distance)
-        internal double HeuristicFunction(Point current, Point endNode) {
-            return Math.Abs(current.X - endNode.X) + Math.Abs(current.Y - endNode.Y);
-        }
         internal void buildGraphVerticesAndEdges(BidirectionalGraph<Point, TaggedEdge<Point, int>> graph, MiningNodeGrid miningNodeGrid) {
             for (int row = 0; row < miningNodeGrid.rows; row++) {
                 for (int col = 0; col < miningNodeGrid.cols; col++) {
@@ -137,39 +135,96 @@ namespace MiningSimulator {
                 }
             }
         }
-        public virtual (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, Point endNode) {
-            // Create a directed graph representing the grid
-            var graph = new BidirectionalGraph<Point, TaggedEdge<Point, int>>();
+        public (int, List<Point>) getShortestPath(MiningNodeGrid miningNodeGrid, Point startNode, List<Point> endNodes) {
+            // Create an instance of DijkstraPathfinding
+            var aStarPathfinding = new AStarPathfinding();
 
-            // Add vertices and edges to the graph
-            buildGraphVerticesAndEdges(graph, miningNodeGrid);
+            // Create a subgraph that includes only the nodes you want to visit
+            var subGraph = new BidirectionalGraph<Point, EquatableEdge<Point>>();
+            var edgeWeights = new Dictionary<EquatableEdge<Point>, int>();
 
-            // Use A* algorithm to find the shortest path
-            var tryGetPaths = graph.ShortestPathsAStar(
-                edge => edge.Tag, // Cost function
-                (node) => HeuristicFunction(node, endNode), // Heuristic function
-                startNode); // Start node
+            foreach (var sourceNode in endNodes.Prepend(startNode)) {
+                foreach (var targetNode in endNodes.Prepend(startNode)) {
+                    if (!sourceNode.Equals(targetNode)) {
+                        // Use A* algorithm to find the shortest path between sourceNode and targetNode
+                        var (pathCost, path) = aStarPathfinding.getShortestPath(miningNodeGrid, sourceNode, targetNode);
+                        var edge = new EquatableEdge<Point>(sourceNode, targetNode);
+                        subGraph.AddVerticesAndEdge(edge);
+                        
+                        edgeWeights[edge] = pathCost;
 
-            IEnumerable<TaggedEdge<Point, int>> shortestPath;
-
-            int totalCost = 0;
-            List<Point> path = new List<Point>();
-            if (tryGetPaths(endNode, out shortestPath)) {
-                foreach (var edge in shortestPath) {
-                    if (edge.Source != startNode) {
-                        path.Add(edge.Source);
                     }
-                    totalCost += edge.Tag;
-                }
-                // Add the destination node to the path
-                path.Add(endNode);
-            } else {
-                if (Globals.debug) {
-                    Console.WriteLine("No path found.");
                 }
             }
 
-            return (totalCost, path);
+            // Create a function to get the weight of an edge
+            Func<EquatableEdge<Point>, double> edgeCost = edge => edgeWeights[edge];
+
+            // Create the TSP algorithm with the subgraph
+            var tsp = new TSP<Point, EquatableEdge<Point>, BidirectionalGraph<Point, EquatableEdge<Point>>>(subGraph, edgeCost);
+
+            // Compute the TSP
+            tsp.Compute();
+
+            // Get the shortest path
+
+            if (tsp.ResultPath != null) {
+                var shortestPath = tsp.ResultPath.Vertices;
+
+                Console.WriteLine("STSP shortest path:");
+                foreach (var pathPoint in shortestPath) {
+                    Console.WriteLine($"{pathPoint.Y},{pathPoint.X}");
+                }
+                Console.WriteLine($"");
+
+
+                // Create a list to store the full path
+                List<Point> fullPath = new List<Point>();
+
+
+                // Create a clone of the miningNodeGrid for adjusting costs
+                var clonedMiningNodeGrid = miningNodeGrid.clone();
+
+                // Iterate over the shortest path
+                for (int i = 0; i < shortestPath.Count() - 1; i++) {
+                    // Get the start and end points of the current segment
+                    Point start = shortestPath.ElementAt(i);
+                    Point end = shortestPath.ElementAt(i + 1);
+
+                    // Use A* algorithm to find the shortest path between start and end
+                    var (_, path) = aStarPathfinding.getShortestPath(clonedMiningNodeGrid, start, end);
+
+                    // Add the path to the full path
+                    fullPath.Add(start);
+                    fullPath.AddRange(path);
+
+                    // Set the cost of the nodes in the path to 0 in the clonedMiningNodeGrid
+                    foreach (var node in path) {
+                        clonedMiningNodeGrid.grid[node.Y, node.X].type.cost = 0;
+                    }
+                }
+
+                //Remove dupe nodes (should be fine since they would be empty nodes after traveling there once)
+                for (int i = 0; i < fullPath.Count; i++) {
+                    for (int j = i + 1; j < fullPath.Count; j++) {
+                        if (fullPath[i].Equals(fullPath[j])) {
+                            fullPath.RemoveAt(j);
+                            j--;
+                        }
+                    }
+                }
+                // Calculate the total cost of the full path
+                int totalCost = fullPath.Select(node => miningNodeGrid.grid[node.Y, node.X].type.cost).Sum();
+
+                // Return the full path and its total cost
+                return (totalCost, fullPath);
+            } else {
+                Console.WriteLine("No STSP path");
+                return (-1,null);
+            }
+            
         }
+
     }
+
 }

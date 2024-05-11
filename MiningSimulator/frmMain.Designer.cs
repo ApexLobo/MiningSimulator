@@ -44,6 +44,8 @@
             lblTotalRedDiamondT2Mined = new Label();
             lblTotalRedDiamondT3Mined = new Label();
             panelOptions = new Panel();
+            btnLoadState = new Button();
+            btnSaveState = new Button();
             lblPickDamage = new Label();
             lblMineToPickCount = new Label();
             btnGenerateGrid = new Button();
@@ -59,6 +61,7 @@
             numericUpDownDepth = new NumericUpDown();
             backgroundWorkerMiner = new System.ComponentModel.BackgroundWorker();
             panelUI = new Panel();
+            btnPrintSTSPPath = new Button();
             panelMine.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewNodes).BeginInit();
             panelStats.SuspendLayout();
@@ -282,6 +285,9 @@
             // panelOptions
             // 
             panelOptions.BorderStyle = BorderStyle.FixedSingle;
+            panelOptions.Controls.Add(btnPrintSTSPPath);
+            panelOptions.Controls.Add(btnLoadState);
+            panelOptions.Controls.Add(btnSaveState);
             panelOptions.Controls.Add(lblPickDamage);
             panelOptions.Controls.Add(lblMineToPickCount);
             panelOptions.Controls.Add(btnGenerateGrid);
@@ -300,6 +306,26 @@
             panelOptions.Padding = new Padding(5);
             panelOptions.Size = new Size(152, 462);
             panelOptions.TabIndex = 32;
+            // 
+            // btnLoadState
+            // 
+            btnLoadState.Location = new Point(7, 224);
+            btnLoadState.Name = "btnLoadState";
+            btnLoadState.Size = new Size(134, 23);
+            btnLoadState.TabIndex = 33;
+            btnLoadState.Text = "Load state";
+            btnLoadState.UseVisualStyleBackColor = true;
+            btnLoadState.Click += btnLoadState_Click;
+            // 
+            // btnSaveState
+            // 
+            btnSaveState.Location = new Point(7, 195);
+            btnSaveState.Name = "btnSaveState";
+            btnSaveState.Size = new Size(134, 23);
+            btnSaveState.TabIndex = 32;
+            btnSaveState.Text = "Save state";
+            btnSaveState.UseVisualStyleBackColor = true;
+            btnSaveState.Click += btnSaveState_Click;
             // 
             // lblPickDamage
             // 
@@ -450,6 +476,16 @@
             panelUI.Size = new Size(808, 553);
             panelUI.TabIndex = 1;
             // 
+            // btnPrintSTSPPath
+            // 
+            btnPrintSTSPPath.Location = new Point(8, 267);
+            btnPrintSTSPPath.Name = "btnPrintSTSPPath";
+            btnPrintSTSPPath.Size = new Size(134, 23);
+            btnPrintSTSPPath.TabIndex = 34;
+            btnPrintSTSPPath.Text = "Print STSP path";
+            btnPrintSTSPPath.UseVisualStyleBackColor = true;
+            btnPrintSTSPPath.Click += btnPrintSTSPPath_Click;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -515,5 +551,8 @@
         private Panel panelOptions;
         private Panel panelStats;
         private Panel panelUI;
+        private Button btnSaveState;
+        private Button btnLoadState;
+        private Button btnPrintSTSPPath;
     }
 }

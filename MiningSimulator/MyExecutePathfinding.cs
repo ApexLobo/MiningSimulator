@@ -105,9 +105,6 @@ namespace MiningSimulator {
             if (Globals.debug) {
                 Console.WriteLine($"Mine interesting items: {interestingItems.Count}");
             }
-            // Sort the list by importance, activity and row
-            interestingItems = interestingItems.OrderByDescending(node => node).ToList();
-
             if (interestingItems.Count > 0) {
                 foreach (MiningNode interestingItem in interestingItems) {
                     if (interestingItem != null) {
